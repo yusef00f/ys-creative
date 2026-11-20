@@ -1,0 +1,80 @@
+/* YS CREATIVE — mobile/desktop polish + video fullscreen (additive only; no component changes) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overscroll-behavior-y:none}
+img,video,iframe{max-width:100%}
+button,[role=button],a,.category-card,.gal-card{touch-action:manipulation}
+.hero{min-height:100vh;min-height:100svh}
+
+/* iPhone notch / dynamic island / home-bar safe areas */
+.topbar{top:max(14px,env(safe-area-inset-top))}
+#ys-chat-launcher{bottom:max(22px,calc(env(safe-area-inset-bottom) + 10px))}
+footer{padding-bottom:max(40px,calc(env(safe-area-inset-bottom) + 20px))}
+
+/* fullscreen button on every video card */
+.ys-fs-btn{position:absolute;z-index:6;bottom:10px;left:10px;width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid #ffffff3a;border-radius:12px;background:#120a1ccc;color:#fff;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:.92;transition:opacity .2s,transform .2s,background .2s}
+.ys-fs-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.ys-fs-btn:hover{background:#2a1b3df0;transform:scale(1.06)}
+.ys-fs-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.ys-fs-btn .i-exit{display:none}
+.ys-is-fs .ys-fs-btn .i-enter{display:none}
+.ys-is-fs .ys-fs-btn .i-exit{display:block}
+/* when the iframe player is on top, keep button reachable but out of the player's own controls */
+.work-preview.playing .ys-fs-btn,.featured-preview.playing .ys-fs-btn{bottom:auto;top:10px;left:10px}
+@media(hover:hover){.work-preview.playing .ys-fs-btn,.featured-preview.playing .ys-fs-btn{opacity:.0}.work-preview.playing:hover .ys-fs-btn,.featured-preview.playing:hover .ys-fs-btn,.ys-fs-btn:focus-visible{opacity:.95}}
+
+/* real Fullscreen API (desktop, Android, iPad) */
+.work-preview:fullscreen,.featured-preview:fullscreen{width:100vw;height:100vh;height:100dvh;aspect-ratio:auto;border-radius:0;border:0;background:#000}
+.work-preview:-webkit-full-screen,.featured-preview:-webkit-full-screen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0;border:0;background:#000}
+.work-preview:fullscreen video,.featured-preview:fullscreen video{object-fit:contain}
+.work-preview:fullscreen .ys-fs-btn,.featured-preview:fullscreen .ys-fs-btn{top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));bottom:auto}
+
+/* fallback "pseudo" fullscreen (iPhone Safari can't fullscreen iframes) */
+.ys-pfs{position:fixed!important;inset:0!important;z-index:2147483000!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;aspect-ratio:auto!important;border-radius:0!important;border:0!important;margin:0!important;background:#000!important;box-shadow:none!important}
+.ys-pfs .ys-fs-btn{top:max(12px,env(safe-area-inset-top))!important;left:max(12px,env(safe-area-inset-left))!important;bottom:auto!important;opacity:.95!important}
+body.ys-fs-open{overflow:hidden!important;position:fixed;width:100%;left:0;right:0}
+body.ys-fs-open:after,body.ys-fs-open #cursorGlow,body.ys-fs-open #mascot,body.ys-fs-open .topbar,body.ys-fs-open .mobile-menu,body.ys-fs-open #ys-chat-launcher,body.ys-fs-open #ys-chat-panel{display:none!important}
+
+/* ---------- tablets ---------- */
+@media(max-width:1024px){.shell{width:min(1180px,calc(100% - 40px))}.category-grid{gap:16px}}
+@media(max-width:760px){.work-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.view{min-height:60vh}}
+
+/* ---------- phones ---------- */
+@media(max-width:620px){
+  .topbar{top:max(9px,env(safe-area-inset-top))}
+  .mobile-menu{top:calc(max(9px,env(safe-area-inset-top)) + 68px)}
+  .menu-toggle,.back,.filter,.lb-btn{min-width:44px;min-height:44px}
+  .back,.filter,.socials a,.phone-link,.external{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .external{padding:6px 4px}
+  .btn,.top-cta{min-height:46px}
+  .contact-links{gap:8px}
+  .work-card{padding:10px;border-radius:18px}
+  .work-card h3{font-size:18px}
+  .work-preview,.featured-preview{border-radius:12px}
+  .preview-cover span{width:60px;height:60px}
+  .ys-fs-btn{width:44px;height:44px;bottom:8px;left:8px}
+  .section-head{margin-bottom:26px}
+  .ys-chat-field input,.ys-chat-field textarea,#ys-chat-compose-text{font-size:16px!important} /* stops iOS zoom-on-focus */
+  #ys-chat-panel{height:min(690px,calc(100dvh - 85px - env(safe-area-inset-bottom)))}
+  #ys-chat-launcher{left:max(14px,env(safe-area-inset-left));max-width:calc(100vw - 28px)}
+}
+@media(max-width:380px){h1{letter-spacing:-3px}.contact-links{grid-template-columns:1fr}.section-head h2{font-size:36px}}
+
+/* ---------- phone in landscape ---------- */
+@media(max-height:480px) and (orientation:landscape){
+  .hero{min-height:auto;padding:100px 0 50px}
+  .view{padding-top:90px}
+  .topbar{height:54px}
+  #ys-chat-launcher{padding:9px 13px;font-size:12px}
+  #ys-chat-panel{height:calc(100dvh - 70px);bottom:60px}
+}
+
+/* ---------- touch devices: no sticky hover lifts ---------- */
+@media(hover:none){
+  .category-card:hover{transform:none;border-color:#ffffff20}
+  .category-card:active{transform:scale(.985)}
+  .top-cta:hover,.btn:hover,.socials a:hover,.phone-link:hover{transform:none}
+  .ys-fs-btn{opacity:.95!important}
+}
+
+/* a finished entrance animation on .view would otherwise trap position:fixed children */
+body.ys-fs-open .view.active,body.ys-fs-open .featured-card,body.ys-fs-open .work-card,body.ys-fs-open .shell{animation:none!important;transform:none!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;will-change:auto!important;contain:none!important}
